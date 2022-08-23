@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import datetime
 
-timeout = 10
+timeout = 5
 
 def runDriver():
     """
@@ -17,7 +17,7 @@ def runDriver():
     """
     options = Options()
     # options.add_experimental_option("excludeSwitches",["ignore-certificate-errors"])
-    # options.add_argument('headless')
+    # options.add_argument('--headless')
     # options.add_argument("--blink-settings=imagesEnabled=false")
     return webdriver.Chrome(executable_path='chromedriver.exe', chrome_options=options)
 
@@ -31,13 +31,29 @@ def getElement(driver, xpath : str):
     """
     find element and return its object
     """
-    return WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
+    count = 0
+    while count<1:
+        count += 1
+        try:
+            element = WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By.XPATH, xpath)))
+            return element
+        except:
+            pass
+    return False
 
 def getAllElements(driver, xpath : str):
     """
     find all elements and return its object
     """
-    return WebDriverWait(driver, timeout).until(EC.presence_of_all_elements_located((By.XPATH, xpath)))
+    count = 0
+    while count<1:
+        count += 1
+        try:
+            element = WebDriverWait(driver, timeout).until(EC.presence_of_all_elements_located((By.XPATH, xpath)))
+            return element
+        except:
+            pass
+    return False
 
 def sendkeys(driver, xpath : str, keys : str):
     """
